@@ -10,8 +10,6 @@ export default class Commands {
     this.currentUser = currentUser
     this.knex = _knex
     this.queries = new Queries(currentUser, _knex)
-    if (this.currentUser)
-      this.github = new Github(this.currentUser.github_access_token)
   }
 
   as(user){
