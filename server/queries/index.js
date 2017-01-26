@@ -91,16 +91,17 @@ export default class Queries {
       .first()
   }
 
-  getPrrrForPullRequest(pullRequest){
+  getPrrrForPullRequest({owner, repo, number}){
     return this.knex
       .select('*')
       .from('pull_request_review_requests')
-      .where({
-        owner: pullRequest.base.repo.owner.login,
-        repo: pullRequest.base.repo.name,
-        number: pullRequest.number,
-      })
+      .where({owner, repo, number})
       .first()
+  }
+
+  getPullRequest({owner, repo, number}){
+    return this.github.pullRequests.get({owner, repo, number})
+      .catch(error => null)
   }
 
   metricsForWeek(week){
