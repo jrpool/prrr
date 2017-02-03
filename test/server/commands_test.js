@@ -230,6 +230,78 @@ describe('Commands', function(){
       })
     })
 
+    describe('claimPrrr', function() {
+
+      it('should return the oldest unclaimed Prrr', function() {
+        const now = moment()
+        const timeAgo = (number, unit) => now.clone().subtract(number, unit).toDate()
+
+        const insertPrrr = attributes =>
+          knex
+            .insert(attributes)
+            .into('pull_request_review_requests')
+            .returning('*')
+
+        const getAllPrrrs = () =>
+          knex
+            .select('*')
+            .from('pull_request_review_requests')
+            .orderBy('created_at', 'asc')
+
+        return Promise.all([
+          insertPrrr({
+            id: 545,
+            owner: 'ykatz',
+            repo: 'prrr-be-awesome',
+            number: 45,
+            requested_by: 'anasauce',
+            created_at: timeAgo(3, 'hours'),
+            updated_at: timeAgo(50, 'minutes'),
+          }),
+          insertPrrr({
+            id: 59884,
+            owner: 'anasauce',
+            repo: 'prrr-so-meta',
+            number: 45,
+            requested_by: 'anasauce',
+            created_at: timeAgo(4, 'hours'),
+            updated_at: timeAgo(4, 'hours'),
+          }),
+          insertPrrr({
+            id: 12154864,
+            owner: 'deadlyicon',
+            repo: 'prrr-forevah',
+            number: 45,
+            requested_by: 'deadlyicon',
+            created_at: timeAgo(2, 'hours'),
+            updated_at: timeAgo(2, 'hours'),
+          }),
+        ])
+        .then(prrrs => commands.claimPrrr())
+        .then(prrr => {
+          expect(prrr).to.not.be.null
+          expect(prrr.id).to.eql(59884)
+          expect(prrr.claimed_by).to.eql('nicosesma')
+        })
+        .then(prrrs => commands.claimPrrr())
+        .then(prrr => {
+          expect(prrr).to.not.be.null
+          expect(prrr.id).to.eql(545)
+          expect(prrr.claimed_by).to.eql('nicosesma')
+        })
+        .then(prrrs => commands.claimPrrr())
+        .then(prrr => {
+          expect(prrr).to.not.be.null
+          expect(prrr.id).to.eql(12154864)
+          expect(prrr.claimed_by).to.eql('nicosesma')
+        })
+        .then(prrrs => commands.claimPrrr())
+        .then(prrr => {
+          expect(prrr).to.be.null
+        })
+      })
+    })
+
   })
 
 })
