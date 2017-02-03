@@ -8,7 +8,8 @@ import Button from '../../atoms/Button'
 import GithubUsername from '../../atoms/GithubUsername'
 import PrrrsTable from '../PrrrsTable'
 import ErrorMessage from '../../atoms/ErrorMessage'
-import { archivePrrr } from '../../../actions'
+import ArchivePrrrButton from '../../atoms/ArchivePrrrButton'
+
 
 export default class MyRequestedPrrrs extends Component {
   static propTypes = {
@@ -50,9 +51,7 @@ export default class MyRequestedPrrrs extends Component {
       this.renderClaimedCell(prrr, currentUser),
       this.renderCompletedCell(prrr, currentUser),
       <td key="archive">
-        <Button onClick={_ => confirmArchivePrrr(prrr)} disabled={!!prrr.claimed_at}>
-          <Icon type="times" />
-        </Button>
+        <ArchivePrrrButton prrr={prrr} disabled={!!prrr.claimed_at} />
       </td>,
     ]
   }
@@ -75,11 +74,4 @@ export default class MyRequestedPrrrs extends Component {
     </div>
   }
 
-}
-
-
-function confirmArchivePrrr(prrr){
-  const url = `https://github.com/${prrr.owner}/${prrr.repo}/pull/${prrr.number}`
-  const message = `Are you sure you want to archive your\n\nPull Request Review Request for\n\n${url}`
-  if (confirm(message)) archivePrrr(prrr.id)
 }

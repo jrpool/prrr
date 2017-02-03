@@ -49,56 +49,70 @@ describe('Commands', function(){
 
     describe('createPrrr', function(){
 
-      context('when the pull request doesnt exist', function(){
-        let pullRequests
-        beforeEach(function(){
-          pullRequests = sinon.stub(commands.github.pullRequests)
-          pullRequests.get.returns(new Promise((resolve, reject) => {
-            reject(new Error)
-          }));
+      context('when the pull request doesnt exist', function () {
+
+        beforeEach(function() {
+          sinon.stub(Queries.prototype, 'getPullRequest').returns(
+            Promise.resolve(null)
+          );
         })
-        it('should reject with "Pull Request Not Found"', function(){
+
+        afterEach(function(){
+          Queries.prototype.getPullRequest.restore()
+        })
+        it('should reject with "Pull Request Not Found"', function () {
           return commands.createPrrr({
             owner: 'nicosesma',
             repo: 'floworky',
-            number: 42,
+            number: 42
           })
-          .catch(error => {
-            expect(error.message).to.eql('Pull Request Not Found')
-          })
+          .then(
+            _ => {
+              throw new Error('expected createPrrr to thrown an error')
+            },
+            error => {
+              expect(error.message).to.eql('Pull Request Not Found')
+            }
+          )
         })
+
       })
 
       context('when the pull request exists', function(){
-        let pullRequests
+
         beforeEach(function(){
-          pullRequests = sinon.stub(commands.github.pullRequests)
-          pullRequests.get.returns(new Promise((resolve, reject) => {
-            resolve({
-              number: 42,
-              base: {
-                repo: {
-                  name: 'floworky',
-                  owner: {
-                    login: 'nicosesma',
-                  },
-                }
+          sinon.stub(Queries.prototype, 'getPullRequest').returns(
+           Promise.resolve({
+            number: 42,
+            base: {
+              repo: {
+                name: 'floworky',
+                owner: {
+                  login: 'nicosesma',
+                },
               }
-            })
-          }));
-        })
+            }
+          })
+        )
+      })
+
+      afterEach(function(){
+         Queries.prototype.getPullRequest.restore()
+       })
 
         context('and a conflicting Prrr already exists', function(){
           beforeEach(function(){
-            return commands.createRecord('pull_request_review_requests',{
-              owner: 'nicosesma',
-              repo: 'floworky',
-              number: 42,
-              requested_by: 'nicosesma',
-              created_at: new Date,
-              updated_at: new Date,
-              archived_at: new Date,
-            })
+            return knex
+              .table('pull_request_review_requests')
+              .insert({
+                owner: 'nicosesma',
+                repo: 'floworky',
+                number: 42,
+                requested_by: 'nicosesma',
+                created_at: new Date,
+                updated_at: new Date,
+                archived_at: new Date,
+              })
           })
           it('should unarchive the pre-existing Prrr and resolve with it', function(){
             return commands.createPrrr({

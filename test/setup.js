@@ -9,6 +9,7 @@ beforeEach(done => {
       Promise.all([
         knex.truncate('users'),
         knex.truncate('pull_request_review_requests'),
+        knex.truncate('skipped_prrrs'),
       ])
     )
     .then(_ => done())

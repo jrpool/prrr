@@ -27,11 +27,7 @@ export default class PrrrsTable extends Component {
       return <tr key={prrr.id}>
         <td className="PrrrsTable-pr">
           <Link href={href} target="_blank">
-            {prrr.owner}/{prrr.repo}
-          </Link>
-          &nbsp;
-          <Link href={href} target="_blank">
-            {prrr.number}
+            {prrr.owner}/{prrr.repo}/pull/{prrr.number}
           </Link>
         </td>
         <td className="PrrrsTable-requested">
