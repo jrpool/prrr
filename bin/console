@@ -1,0 +1,9 @@
+#!/usr/bin/env bash
+
+node -i -e "\
+const knex = require('./build/server/knex').default; \
+const Queries = require('./build/server/queries').default; \
+const Commands = require('./build/server/commands').default; \
+const queries = new Queries; \
+const commands = new Commands; \
+"
