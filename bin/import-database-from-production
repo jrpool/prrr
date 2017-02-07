@@ -5,6 +5,6 @@ set -x
 
 now=$(date +'%s')
 outfile="./tmp/$now.dump"
-heroku pg:backups:capture
-heroku pg:backups:download --output $outfile
+heroku pg:backups:capture --remote production
+heroku pg:backups:download --output $outfile --remote production
 pg_restore --verbose --clean --no-acl --no-owner  -d prrr-development $outfile
