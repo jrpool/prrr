@@ -130,13 +130,22 @@ const Duration = ({duration}) =>{
 }
 
 const Reviewers = ({reviewers}) => {
-  reviewers = Object.keys(reviewers).map(reviewer =>
-    <div key={reviewer}>
+  reviewers = Object.keys(reviewers)
+    .map(reviewer => {
+      return {
+        name: reviewer,
+        total: reviewers[reviewer],
+      }
+    })
+    .sort((a,b) => b.total - a.total)
+
+  reviewers = reviewers.map(reviewer =>
+    <div key={reviewer.name}>
       <div className="MetricsPage-reviewers-total">
-        {reviewers[reviewer]}
+        {reviewer.total}
       </div>
       <div className="MetricsPage-reviewers-reviewer">
-        {reviewer}
+        {reviewer.name}
       </div>
     </div>
   )
