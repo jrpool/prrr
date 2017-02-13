@@ -29,6 +29,17 @@ export default class Commands {
     return this.createRecord('users', attributes)
   }
 
+  updateUser(github_id, attributes){
+    attributes.updated_at = new Date
+    console.log('updateUser', github_id, attributes)
+    return this.knex
+      .table('users')
+      .update(attributes)
+      .where('github_id', github_id)
+      .returning('*')
+      .then(firstRecord)
+  }
+
   findOrCreateUserFromGithubProfile({accessToken, refreshToken, profile}){
     const userAttributes = {
       name: profile.displayName || profile.username,
@@ -47,7 +58,11 @@ export default class Commands {
       .table('users')
       .where('github_id', profile.id)
       .first('*')
-      .then(user => user ? user : this.createUser(userAttributes))
+      .then(user =>
+        user
+          ? this.updateUser(userAttributes.github_id, userAttributes)
+          : this.createUser(userAttributes)
+      )
   }
 
   reopenPrrr(id){
