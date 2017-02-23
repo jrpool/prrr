@@ -111,6 +111,10 @@ const Metrics = ({metrics}) => {
       <Duration duration={metrics.averageTimeForPrrrToBeCompleted} />
     </div>
     <div>
+      <strong>Longest time for PR to be reviewed: </strong>
+      <Duration duration={metrics.longestTimeForPrrrToBeReviewed} />
+    </div>
+    <div>
       <strong>Total number of projects that requested reviews: </strong>
       <span>{metrics.totalNumberOfProjectsThatRequestedReviews}</span>
     </div>
