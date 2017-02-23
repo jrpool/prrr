@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 
 node -i -e "\
+const moment = require('moment'); \
 const knex = require('./build/server/knex').default; \
 const Queries = require('./build/server/queries').default; \
 const Commands = require('./build/server/commands').default; \

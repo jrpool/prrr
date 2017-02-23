@@ -104,8 +104,12 @@ export default class Queries {
       .catch(error => null)
   }
 
+  metrics(week){
+    return new Metrics({week, queries: this})
+  }
+
   metricsForWeek(week){
-    return new Metrics({week, queries: this}).load()
+    return this.metrics(week).load()
   }
 }
 
