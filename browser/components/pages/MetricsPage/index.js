@@ -99,6 +99,10 @@ const Metrics = ({metrics}) => {
       <span>{metrics.totalCodeReviews}</span>
     </div>
     <div>
+      <strong>Total Prrr users: </strong>
+      <span>{metrics.totalUsersCount}</span>
+    </div>
+    <div>
       <strong>Average time for PR to be claimed: </strong>
       <Duration duration={metrics.averageTimeForPrrrToBeClaimed} />
     </div>

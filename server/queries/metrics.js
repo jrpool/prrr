@@ -27,6 +27,7 @@ export default class Metrics {
   load(){
     return Promise.all([
       this.totalCodeReviews(),
+      this.totalUsersCount(),
       this.totalCodeReviewsPerReviewer(),
       this.averageTimeForPrrrToBeClaimed(),
       this.averageTimeForPrrrToBeCompleted(),
@@ -38,12 +39,13 @@ export default class Metrics {
       return {
         week: this.week.format('YYYY-MM-DD'),
         totalCodeReviews: results[0],
-        totalCodeReviewsPerReviewer: results[1],
-        averageTimeForPrrrToBeClaimed: results[2],
-        averageTimeForPrrrToBeCompleted: results[3],
-        totalNumberOfProjectsThatRequestedReviews: results[4],
-        averageNumberOfReviewsRequestedPerProject: results[5],
-        prrrs: results[6],
+        totalUsersCount: results[1],
+        totalCodeReviewsPerReviewer: results[2],
+        averageTimeForPrrrToBeClaimed: results[3],
+        averageTimeForPrrrToBeCompleted: results[4],
+        totalNumberOfProjectsThatRequestedReviews: results[5],
+        averageNumberOfReviewsRequestedPerProject: results[6],
+        prrrs: results[7],
       }
     })
   }
@@ -53,6 +55,13 @@ export default class Metrics {
       .count()
       .whereNotNull('completed_at')
       .then(results => Number(results[0].count))
+  }
+
+  totalUsersCount(){
+    return this.knex
+      .table('users')
+      .count('*')
+      .then(result => Number(result[0].count))
   }
 
   totalCodeReviewsPerReviewer(){
