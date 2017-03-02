@@ -5,6 +5,7 @@ import Date from '../../atoms/Date'
 import Button from '../../atoms/Button'
 import GithubUsername from '../../atoms/GithubUsername'
 import { archivePrrr } from '../../../actions'
+import prrrToPullRequestURL from '../../../prrrToPullRequestURL'
 import './index.sass'
 
 export default class PrrrsTable extends Component {
@@ -23,7 +24,7 @@ export default class PrrrsTable extends Component {
       renderAdditionalHeaders,
     } = this.props
     const rows = prrrs.map(prrr => {
-      const href = `https://github.com/${prrr.owner}/${prrr.repo}/pull/${prrr.number}`
+      const href = prrrToPullRequestURL(prrr)
       return <tr key={prrr.id}>
         <td className="PrrrsTable-pr">
           <Link href={href} target="_blank">

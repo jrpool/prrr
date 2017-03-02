@@ -7,6 +7,7 @@ import GithubUsername from '../atoms/GithubUsername'
 import Layout from '../molecules/Layout'
 import PrrrsTable from '../molecules/PrrrsTable'
 import { loadAllPrrrs } from '../../actions'
+import prrrToPullRequestURL from '../../prrrToPullRequestURL'
 
 
 export default class AllPrrrsPage extends Component {
@@ -60,7 +61,7 @@ export default class AllPrrrsPage extends Component {
 }
 
 const PrLinkTd = ({prrr}) => {
-  const href = `https://github.com/${prrr.owner}/${prrr.repo}/pull/${prrr.number}`
+  const href = prrrToPullRequestURL(prrr)
   return <td className="AllPrrrs-pr">
     <Link href={href} target="_blank">
       {prrr.owner}/{prrr.repo}/pull/{prrr.number}

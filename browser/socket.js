@@ -1,5 +1,6 @@
 import logger from './logger'
 import state from './state'
+import prrrToPullRequestURL from './prrrToPullRequestURL'
 const io = require('socket.io-client')
 const socket = io.connect(location.origin)
 
@@ -55,7 +56,7 @@ on('PrrrUpdated', (prrr) => {
 })
 
 on('PrrrClaimed', (prrr) => {
-  const url = `https://github.com/${prrr.owner}/${prrr.repo}/pull/${prrr.number}`
+  const url = prrrToPullRequestURL(prrr)
   const popup = window.open(url, '_blank')
   if (popup) popup.focus()
 })

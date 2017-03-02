@@ -3,6 +3,7 @@ import moment from 'moment'
 import Button from '../../atoms/Button'
 import Link from '../../atoms/Link'
 import './index.sass'
+import prrrToPullRequestURL from '../../../prrrToPullRequestURL'
 
 const ONE_WEEK_IN_SECONDS = 604800
 const PERCENTAGE_FOR_CSS = 100
@@ -33,7 +34,7 @@ export default class Timeline extends Component {
     if (!prrrs) return <div>Loading...</div>
 
     const rows = prrrs.map(prrr => {
-      const href = `https://github.com/${prrr.owner}/${prrr.repo}/pull/${prrr.number}`
+      const href = prrrToPullRequestURL(prrr)
 
       const marginLeftForClaimed =
         this.checkForOverflowingValues(moment(prrr.claimed_at))

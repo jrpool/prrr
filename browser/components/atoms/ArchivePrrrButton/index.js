@@ -2,6 +2,7 @@ import React, { Component, PropTypes } from 'react'
 import Button from '../Button'
 import Icon from '../Icon'
 import { archivePrrr } from '../../../actions'
+import prrrToPullRequestURL from '../../../prrrToPullRequestURL'
 
 export default class ArchivePrrrButton extends Component {
 
@@ -27,7 +28,7 @@ export default class ArchivePrrrButton extends Component {
 
 
 function confirmArchivePrrr(prrr){
-  const url = `https://github.com/${prrr.owner}/${prrr.repo}/pull/${prrr.number}`
+  const url = prrrToPullRequestURL(prrr)
   const message = `Are you sure you want to archive your\n\nPull Request Review Request for\n\n${url}`
   if (confirm(message)) archivePrrr(prrr.id)
 }
