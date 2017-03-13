@@ -2,9 +2,10 @@ import React, { Component, PropTypes } from 'react'
 import moment from 'moment'
 import './index.sass'
 
+
 export default class Countdown extends Component {
 
-  static proptTypes = {
+  static propTypes = {
     deadline: PropTypes.instanceOf(moment),
   }
 
