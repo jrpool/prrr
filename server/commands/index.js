@@ -102,7 +102,7 @@ export default class Commands {
       })
   }
 
-  markPullRequestAsClaimed(prrrId){
+  claimPrrr(prrrId){
     return this.knex
       .table('pull_request_review_requests')
       .update({
@@ -114,11 +114,10 @@ export default class Commands {
       .whereNull('claimed_by')
       .whereNull('claimed_at')
       .returning('*')
-      .then(firstRecord)
-  }
-
-  claimPrrr(prrrId){
-    return this.markPullRequestAsClaimed(prrrId)
+      .then(records => {
+        if (records.length === 1) return records[0]
+        throw new Error('Unable to claim Prrr')
+      })
   }
 
   unclaimPrrr(prrrId){
@@ -154,20 +153,6 @@ export default class Commands {
         return this.claimPrrr()
           .then(newClaimedPrrr => ({newClaimedPrrr, skippedPrrr}))
       })
-  }
-
-  unclaimStalePrrrs(prrr){
-    return this.knex
-      .table('pull_request_review_requests')
-      .update({
-        claimed_by: null,
-        claimed_at: null,
-        updated_at: new Date,
-      })
-      .whereRaw(`claimed_at <= NOW() - '1 hour'::INTERVAL`)
-      .whereNotNull('claimed_by')
-      .whereNotNull('claimed_at')
-      .whereNull('completed_at')
   }
 
   archivePrrr(prrrId){

@@ -1,9 +1,10 @@
+import moment from 'moment'
 import Queries from '../server/queries'
 import Commands from '../server/commands'
 
 const commands = new Commands()
 
-const withUsersInTheDatabase = callback => {
+export const withUsersInTheDatabase = callback => {
   context('When several users exist in the database', function(){
     beforeEach(function(){
       return Promise.all([
@@ -40,4 +41,22 @@ const withUsersInTheDatabase = callback => {
   })
 }
 
-export { withUsersInTheDatabase }
+let now
+beforeEach(function(){ now = moment() })
+export const timeAgo = (number, unit) =>
+  now.clone().subtract(number, unit).toDate()
+
+
+
+export const insertPrrr = attributes =>
+  knex
+    .insert(attributes)
+    .into('pull_request_review_requests')
+    .returning('*')
+
+export const getPrrrById = prrrId =>
+  knex
+    .select('*')
+    .from('pull_request_review_requests')
+    .where('id', prrrId)
+    .first()
