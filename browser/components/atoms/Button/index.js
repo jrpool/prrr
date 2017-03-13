@@ -12,12 +12,14 @@ export default class Button extends Component {
     submit: PropTypes.bool,
     noFocus: PropTypes.bool,
     disabled: PropTypes.bool,
+    thin: PropTypes.bool,
   };
 
   static defaultProps = {
     submit: false,
     noFocus: false,
     disabled: false,
+    thin: false,
   };
 
   render(){
@@ -29,6 +31,12 @@ export default class Button extends Component {
 
     const buttonTypeClassName = type ? `Button-${type}` : ''
     props.className = `Button ${buttonTypeClassName} ${props.className||''}`
+
+    if (props.thin) {
+      props.className += ' Button-thin'
+    }
+    delete props.thin
+
     if (props.disabled) {
       props.className += ' Button-disabled'
       props.onClick = event => event.preventDefault()
