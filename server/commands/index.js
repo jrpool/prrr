@@ -83,22 +83,25 @@ export default class Commands {
     return this.queries.getPullRequest({owner, repo, number})
       .then(pullRequest => {
         if (!pullRequest) throw new Error('Pull Request Not Found')
+        const title = pullRequest.title
+
         return this.queries.getPrrrForPullRequest({owner, repo, number})
-      })
-      .then(prrr => {
-        if (prrr) {
-          return prrr.archived_at || prrr.completed_at
-            ? this.reopenPrrr(prrr.id)
-            : prrr
-        }
-        return this.createRecord('pull_request_review_requests',{
-          owner,
-          repo,
-          number,
-          requested_by: this.currentUser.github_username,
-          created_at: new Date,
-          updated_at: new Date,
-        })
+          .then(prrr => {
+            if (prrr) {
+              return prrr.archived_at || prrr.completed_at
+                ? this.reopenPrrr(prrr.id)
+                : prrr
+            }
+            return this.createRecord('pull_request_review_requests',{
+              owner,
+              repo,
+              number,
+              title,
+              requested_by: this.currentUser.github_username,
+              created_at: new Date,
+              updated_at: new Date,
+            })
+          })
       })
   }
 

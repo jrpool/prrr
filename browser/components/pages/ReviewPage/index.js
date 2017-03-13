@@ -95,6 +95,7 @@ class PendingPrrrsTable extends Component {
         <thead>
           <tr>
             <th>Repo Name</th>
+            <th>PR Title</th>
             <th>Requested</th>
             <th>Claim</th>
           </tr>
@@ -132,6 +133,9 @@ const PendingPrrrsTableRow = ({prrr}) => {
       <Link href={href} target="_blank">
         {prrr.repo}
       </Link>
+    </td>
+    <td>
+      {prrr.title}
     </td>
     <td>
       <Date fromNow date={prrr.created_at} />
