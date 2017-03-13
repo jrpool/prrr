@@ -45,9 +45,15 @@ class CreatePrrrForm extends Component {
     this.setState({url, error, owner, repo, number})
   }
 
+  isValid(){
+    const {url, error, owner, repo, number} = this.state
+    return !error && owner && repo && number
+  }
+
   createPrrr = (event) => {
-    this.onChange()
     event.preventDefault()
+    this.onChange()
+    if (!this.isValid()) return
     const { owner, repo, number } = this.state
     this.setState({creating: true})
     createPrrr({owner, repo, number})
@@ -95,7 +101,7 @@ class CreatePrrrForm extends Component {
       </span>
       </div>
       <div className="RequestReviewPage-ButtonDiv">
-        <Button type="success" submit>Add Prrr</Button>
+        <Button type="success" submit disabled={disabled}>Add Prrr</Button>
       </div>
     </form>
   }
