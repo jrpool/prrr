@@ -48,6 +48,11 @@ passport.deserializeUser(function(user, done) {
 });
 
 
+router.use('/login', (req, res, next) => {
+  req.session.redirectTo = req.query.r
+  next()
+})
+
 router.get('/login', passport.authenticate('github'));
 
 
@@ -55,7 +60,7 @@ router.get('/auth/github/callback',
   passport.authenticate('github', { failureRedirect: '/login' }),
   function(req, res) {
     // Successful authentication, redirect home.
-    res.redirect('/')
+    res.redirect(req.session.redirectTo || '/')
   }
 )
 

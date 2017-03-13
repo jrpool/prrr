@@ -17,7 +17,7 @@ export default class LoggedOutHomePage extends Component {
         <div className="LoggedOutHomePage-info">Pull Request Review Request</div>
       </div>
       <div className="LoggedOutHomePage-SectionTwo">
-        <Button href="/login" externalLink>Login via Github</Button>
+        <Button href={`/login?r=${encodeURIComponent(location.pathname)}`} externalLink>Login via Github</Button>
       </div>
       <div className="LoggedOutHomePage-SectionThree">
         <p> Review Together. </p>
