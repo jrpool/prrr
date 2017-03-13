@@ -60,7 +60,7 @@ class PendingPrrrsTable extends Component {
 
   onFilterChange = (event) => {
     this.setState({
-      filter: event.target.value.toLowerCase(),
+      filter: event.target.value,
     })
   }
 
@@ -71,7 +71,7 @@ class PendingPrrrsTable extends Component {
     let filter = this.state.filter.trim()
     if (filter.length > 0){
       visiblePrrrs = visiblePrrrs.filter(prrr =>
-        prrr.repo.toLowerCase().includes(filter)
+        `${prrr.repo} ${prrr.title}`.toLowerCase().includes(filter.toLowerCase())
       )
     }
 
