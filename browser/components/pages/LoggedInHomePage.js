@@ -16,12 +16,6 @@ export default class LoggedInHomePage extends Component {
     })
 
     return <Layout className="HomePage" session={session} errors={errors}>
-      <h1>Pull Requests Waiting For Review:</h1>
-      <ClaimAPrrr
-        currentUser={session.user}
-        prrrs={prrrs}
-      />
-      
       <ToggleableSection title="My Requested Prrrs">
         <MyRequestedPrrrs
           currentUser={session.user}

@@ -16,12 +16,8 @@ export const archivePrrr = (prrrId) => {
   emit('archivePrrr', {prrrId})
 }
 
-export const claimPrrr = () => {
-  emit('claimPrrr')
-}
-
-export const skipPrrr = (prrrId) => {
-  emit('skipPrrr', {prrrId})
+export const claimPrrr = (prrrId) => {
+  emit('claimPrrr', {prrrId})
 }
 
 export const unclaimPrrr = (prrrId) => {

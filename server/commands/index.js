@@ -117,13 +117,8 @@ export default class Commands {
       .then(firstRecord)
   }
 
-  claimPrrr(){
-    return this.queries.getNextPendingPrrr()
-      .then(prrr =>
-        prrr
-          ? this.markPullRequestAsClaimed(prrr.id)
-          : null
-      )
+  claimPrrr(prrrId){
+    return this.markPullRequestAsClaimed(prrrId)
   }
 
   unclaimPrrr(prrrId){

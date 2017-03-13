@@ -19,9 +19,15 @@ export default class Date extends Component {
     const date = moment(this.props.date)
     const title = date.format("dddd, MMMM Do YYYY, h:mm:ss a");
     const value = this.props.fromNow
-      ? date.fromNow()
+      ? date.fromNow(false)
       : title
-    return <span title={title}>{value}</span>
+    return <span
+      className="Date"
+      title={title}
+      value={value}
+    >
+      {value}
+    </span>
   }
 }
 

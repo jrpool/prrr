@@ -1,0 +1,59 @@
+.ReviewPage
+
+  &-content
+    display: flex
+    flex-direction: column
+    align-items: center
+
+  &-PendingPrrrsTable
+    text-align: center
+    min-width: 50vw
+
+    table
+      border-collapse: collapse
+      table-layout: fixed
+      min-width: 100%
+      th, td
+        text-align: left
+        padding: 0.25em 0.5em
+        &:nth-child(1)
+          width: auto
+        &:nth-child(2)
+          width: 8em
+        &:nth-child(3)
+          width: 4em
+
+      > tbody > tr
+        border-bottom: 1px solid rgba(0,0,0,0.1)
+        &:hover
+          background-color: rgba(0,0,255,0.2)
+        > td
+          line-height: 38px
+
+        td,th
+          white-space: nowrap
+          overflow: hidden
+          text-overflow: ellipsis
+    .Date
+      &[value*="minute"]
+        color: blue
+      &[value*="hour"]
+        color: green
+      &[value*="day"]
+        color: red
+
+    &-controls
+      display: flex
+      flex-direction: row
+      justify-content: space-between
+      margin-bottom: 1em
+      align-items: center
+
+  &-PrrrReviewStatus
+    text-align: center
+    &-details
+      margin: 2em 0
+    &-controls
+      display: flex
+      flex-direction: row
+      justify-content: space-around

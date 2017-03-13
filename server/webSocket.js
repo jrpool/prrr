@@ -137,9 +137,9 @@ const initializeConnection = (socket) => {
   })
 
 
-  on('claimPrrr', () => {
+  on('claimPrrr', ({prrrId}) => {
     if (!user) return
-    commands.claimPrrr()
+    commands.claimPrrr(prrrId)
       .then(prrr => {
         if (prrr){
           emit('PrrrClaimed', prrr)

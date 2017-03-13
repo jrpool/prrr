@@ -1,9 +1,11 @@
 import React, { Component, PropTypes } from 'react'
-import Button from '../../atoms/Button'
 import Link from '../../atoms/Link'
+import Icon from '../../atoms/Icon'
+import IconLink from '../../atoms/IconLink'
+import Button from '../../atoms/Button'
 import Avatar from '../../atoms/Avatar'
 import './index.sass'
-import favicon from '../../../images/favicon.ico'
+import prrrCat from '../../../images/prrrCat.ico'
 
 export default class Navbar extends Component {
 
@@ -14,22 +16,26 @@ export default class Navbar extends Component {
   render(){
     const { user } = this.props.session
     return <div className="Navbar">
-      <div className="Navbar-inline-links">
-        <Link href="/">Home</Link>
-        <Link href="/request">Add a Prrr</Link>
-        <Link href="/metrics">Metrics</Link>
-        <Link href="/all">All Prrrs</Link>
-      </div>
       <div>
         <Link className="Navbar-logo" href="/">
-          <img src={favicon} />
+          <img src={prrrCat} />
           <span>Prrr</span>
         </Link>
+        <IconLink className="Navbar-link" href="/request" type="plus-circle">Request A Review</IconLink>
+        <IconLink className="Navbar-link" href="/review"  type="eye"        >Review A PR</IconLink>
+        <IconLink className="Navbar-link" href="/metrics" type="area-chart" >Metrics</IconLink>
+        <IconLink className="Navbar-link" href="/all"     type="circle"     >All Prrrs</IconLink>
       </div>
       <div>
-        <span>{user.name}</span>
-        <Avatar user={user} />
-        <Link href="/logout" externalLink className="Navbar-button-logout">Logout</Link>
+        <Link href={`https://github.com/${user.github_username}`} externalLink className="Navbar-user-name">
+          <span>{user.name}</span>
+        </Link>
+        <Link href={`https://github.com/${user.github_username}`} externalLink className="Navbar-avatar">
+          <Avatar user={user} />
+        </Link>
+        <Link href="/logout" externalLink className="Navbar-button-logout">
+          <Icon type="sign-out" title="Logout" />
+        </Link>
       </div>
     </div>
   }

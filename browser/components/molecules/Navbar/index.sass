@@ -11,17 +11,17 @@
   padding: 5px 10px
   box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
 
-  &-inline-links
-    > .Link
-      position: relative
-      margin-right: 1em
-      &:not(:last-child):after
-        position: absolute
-        top: 0
-        right: -0.65em
-        content: " | "
-        &:hover
-          text-decoration: none
+  .Link
+    color: white
+    &:hover, &:focus, &:active
+      color: lightblue
+
+  > div
+    display: flex
+    flex-direction: row
+    align-items: center
+    justify-content: space-between
+
   &-logo
     font-family: "Lobster", cursive
     font-size: 40px
@@ -34,16 +34,39 @@
       -webkit-filter: invert(1)
       filter: invert(1)
 
-  > div
-    display: flex
-    flex-direction: row
-    align-items: center
-    justify-content: space-between
-    > *
-      margin-right: 0.25em
+  &-link
+    display: inline-block
+    padding: 0.5em 1em
+    &:hover, &:focus, &:active
+      text-decoration: none
+      font-weight: bolder
+      transform: scale(1.1)
+      outline: none
 
   .Avatar
-    margin-right: 15px
+    margin: 0 15px
     height: 40px
     width: 40px
     border-radius: 50%
+
+  @media (max-width: 900px)
+    &-logo
+      margin-right: 20px
+    &-link
+      padding: 0.5em
+      > span
+        display: none
+    .Icon
+      font-size: 150%
+
+  @media (max-width: 600px)
+    &-user-name
+      display: none
+
+  @media (max-width: 413px)
+    &-logo
+      margin-right: 0
+      > span
+        display: none
+    &-link
+      padding: 0.5em 0.25em

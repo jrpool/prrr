@@ -68,9 +68,11 @@ class CreatePrrrForm extends Component {
     if (errorMessage === 'duplicate')
       errorMessage = 'This pull request has allready been added'
 
+    const disabled = !this.isValid()
+
 
     return <form className="RequestReviewPage-CreatePrrrForm" onSubmit={this.createPrrr}>
-      <h1>Submit Request Review</h1>
+      <h1>Request a Review of a Pull Request</h1>
       {errorMessage && <h2>ERROR: {errorMessage}</h2>}
       <div className="RequestReviewPage-InputBoxPadding">
         <input className="RequestReviewPage-InputBox"
